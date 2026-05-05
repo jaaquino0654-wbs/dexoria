@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Project: The API Integration Bridge</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+  
+  <!-- ═══════════════════════════════════════ NAVBAR ═══════════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <span class="logo-icon">◈</span>
+      <span class="logo-text">Dexoria</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="nav-btn active" data-page="home">Home</a></li>
+      <li><a href="#" class="nav-btn" data-page="explore">Explore</a></li>
+      <li><a href="#" class="nav-btn" data-page="pokedex">Pokédex</a></li>
+      <li><a href="#" class="nav-btn" data-page="insight">Insight</a></li>
+      <li><a href="#" class="nav-btn" data-page="favorites">Favorites <span class="fav-count" id="navFavCount" style="display:none">0</span></a></li>
+      <li><a href="#" class="nav-btn" data-page="about">About</a></li>
+    </ul>
+    <button class="nav-settings-btn" id="settingsBtn" title="Settings">
+      <i class="fas fa-gear"></i>
+    </button>
+  </nav>
+  
+  <!-- ═══════════════════════════════════════ PAGES ═══════════════════════════════════════ -->
+  <main id="app">
+    
+    <!-- ──────────────────── HOME PAGE ──────────────────── -->
+    <section class="page active" id="page-home">
+      <div class="hero">
+        <div class="hero-text">
+          <p class="hero-eyebrow">The Ultimate Pokédex Experience</p>
+          <h1 class="hero-title">Discover Every<br /><span class="accent-text">Pokémon</span><br />Ever Created</h1>
+          <p class="hero-sub">Explore 1,000+ Pokémon with detailed stats, evolutions, type matchups, insights, and more.</p>
+          <div class="hero-btns">
+            <button class="btn-primary" data-goto="explore">Explore Now <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-secondary" data-goto="pokedex">Open Pokédex <i class="fas fa-book-open"></i></button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="pokeball-wrap">
+            <div class="pokeball">
+              <div class="pokeball-top"></div>
+              <div class="pokeball-bottom"></div>
+              <div class="pokeball-center">
+                <div class="pokeball-button"></div>
+              </div>
+            </div>
+            <div class="pokeball-rings">
+              <div class="ring ring-1"></div>
+              <div class="ring ring-2"></div>
+              <div class="ring ring-3"></div>
+            </div>
+            <div class="pokeball-particles" id="pokeballParticles"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Home Quick Stats -->
+      <div class="home-stats">
+        <div class="stat-card">
+          <span class="stat-num" data-target="1025">0</span>
+          <span class="stat-label">Pokémon</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" data-target="18">0</span>
+          <span class="stat-label">Types</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" data-target="9">0</span>
+          <span class="stat-label">Generations</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" data-target="800">0</span>
+          <span class="stat-label">Moves</span>
+        </div>
+      </div>
+      
+      <!-- Home Feature Highlights -->
+      <div class="home-features">
+        <h2 class="section-title">What's Inside <span class="accent-text">Dexoria</span></h2>
+        <div class="features-grid">
+          <div class="feature-card" data-goto="explore">
+            <div class="feature-icon"><i class="fas fa-infinity"></i></div>
+            <h3>Explore Gallery</h3>
+            <p>Animated infinite Pokémon rows with beautiful glass cards. Hover to reveal names, click to dive deeper.</p>
+            <span class="feature-arrow">→</span>
+          </div>
+          <div class="feature-card" data-goto="pokedex">
+            <div class="feature-icon"><i class="fas fa-search"></i></div>
+            <h3>Full Pokédex</h3>
+            <p>Search by name, number, type, generation or region. Click any Pokémon for full stats, abilities & evolutions.</p>
+            <span class="feature-arrow">→</span>
+          </div>
+          <div class="feature-card" data-goto="insight">
+            <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+            <h3>Insights Hub</h3>
+            <p>Guides, top lists, and strategy content to help you understand the Pokémon world beyond just numbers.</p>
+            <span class="feature-arrow">→</span>
+          </div>
+          <div class="feature-card" data-goto="favorites">
+            <div class="feature-icon"><i class="fas fa-star"></i></div>
+            <h3>Favorites</h3>
+            <p>Save your favorite Pokémon with one click. Your collection is stored locally, always there when you return.</p>
+            <span class="feature-arrow">→</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Home Footer strip -->
+      <footer class="page-footer">
+        <p>Data powered by <a href="https://pokeapi.co" target="_blank">PokéAPI</a> · Pokémon © Nintendo / Game Freak ·
+          <br>
+          <br>
+          This project was created as part of a <em>Final Project: The API Integration Bridge</em> to explore real-world web development, API integration, and UI/UX design principles.
+        </p>
+      </footer>
+    </section>
+    
+    <!-- ──────────────────── EXPLORE PAGE ──────────────────── -->
+    <section class="page" id="page-explore">
+      <div class="explore-bg" id="exploreBg"></div>
+      <div class="explore-header">
+        <h1 class="explore-title">Explore</h1>
+        <p class="explore-sub">A living gallery of every Pokémon. Infinite, animated, and alive.</p>
+      </div>
+      <div class="explore-rows" id="exploreRows">
+        <div class="gallery-row-wrap" id="rowWrap1">
+          <div class="gallery-row row-left" id="row1"></div>
+        </div>
+        <div class="gallery-row-wrap" id="rowWrap2">
+          <div class="gallery-row row-right" id="row2"></div>
+        </div>
+        <div class="gallery-row-wrap" id="rowWrap3">
+          <div class="gallery-row row-left" id="row3"></div>
+        </div>
+      </div>
+      <footer class="page-footer">
+        <p>Data powered by <a href="https://pokeapi.co" target="_blank">PokéAPI</a> · Pokémon © Nintendo / Game Freak ·
+          <br>
+          <br>
+          This project was created as part of a <em>Final Project: The API Integration Bridge</em> to explore real-world web development, API integration, and UI/UX design principles.
+        </p>
+      </footer>
+    </section>
+    
+    <!-- ──────────────────── POKÉDEX PAGE ──────────────────── -->
+    <section class="page" id="page-pokedex">
+      <div class="pokedex-hero">
+        <h1>Pokédex</h1>
+        <p>Search, filter, and explore every Pokémon with ease.</p>
+      </div>
+      <div class="dex-filter-bar" id="dexFilterBar">
+        <div class="dex-search-wrap">
+          <i class="fas fa-search dex-search-icon"></i>
+          <input type="text" id="dexSearch" class="dex-search" placeholder="Search by name or #number…" />
+        </div>
+        <select id="dexType" class="dex-select">
+          <option value="">All Types</option>
+          <option value="fire">Fire</option>
+          <option value="water">Water</option>
+          <option value="grass">Grass</option>
+          <option value="electric">Electric</option>
+          <option value="psychic">Psychic</option>
+          <option value="ice">Ice</option>
+          <option value="dragon">Dragon</option>
+          <option value="dark">Dark</option>
+          <option value="fairy">Fairy</option>
+          <option value="fighting">Fighting</option>
+          <option value="flying">Flying</option>
+          <option value="poison">Poison</option>
+          <option value="ground">Ground</option>
+          <option value="rock">Rock</option>
+          <option value="bug">Bug</option>
+          <option value="ghost">Ghost</option>
+          <option value="steel">Steel</option>
+          <option value="normal">Normal</option>
+        </select>
+        <select id="dexGen" class="dex-select">
+          <option value="">All Generations</option>
+          <option value="1">Gen I (Kanto)</option>
+          <option value="2">Gen II (Johto)</option>
+          <option value="3">Gen III (Hoenn)</option>
+          <option value="4">Gen IV (Sinnoh)</option>
+          <option value="5">Gen V (Unova)</option>
+          <option value="6">Gen VI (Kalos)</option>
+          <option value="7">Gen VII (Alola)</option>
+          <option value="8">Gen VIII (Galar)</option>
+          <option value="9">Gen IX (Paldea)</option>
+        </select>
+        <select id="dexSort" class="dex-select">
+          <option value="number">Sort: Number</option>
+          <option value="name">Sort: Name</option>
+        </select>
+        <button class="dex-clear-btn" id="dexClear"><i class="fas fa-times"></i> Clear</button>
+      </div>
+      <div class="dex-grid" id="dexGrid"></div>
+      <div class="dex-load-wrap">
+        <button class="btn-primary" id="dexLoadMore">Load More Pokémon <i class="fas fa-chevron-down"></i></button>
+      </div>
+      <footer class="page-footer">
+        <p>Data powered by <a href="https://pokeapi.co" target="_blank">PokéAPI</a> · Pokémon © Nintendo / Game Freak ·
+          <br>
+          <br>
+          This project was created as part of a <em>Final Project: The API Integration Bridge</em> to explore real-world web development, API integration, and UI/UX design principles.
+        </p>
+      </footer>
+    </section>
+    
+    <!-- ──────────────────── INSIGHT PAGE ──────────────────── -->
+    <section class="page" id="page-insight">
+      <div class="insight-header">
+        <h1>Insights</h1>
+        <p>Understand Pokémon beyond the surface.</p>
+      </div>
+      <!-- Category Tabs -->
+      <div class="insight-tabs">
+        <button class="ins-tab active" data-filter="all">All</button>
+        <button class="ins-tab" data-filter="guide">Guides</button>
+        <button class="ins-tab" data-filter="toplist">Top Lists</button>
+        <button class="ins-tab" data-filter="strategy">Strategy</button>
+      </div>
+      <!-- Featured Insight -->
+      <div class="insight-featured">
+        <div class="featured-text">
+          <span class="ins-tag strategy">Strategy</span>
+          <h2>Why Dragon Types Dominate Late Game</h2>
+          <p>Dragon-type Pokémon have some of the highest base stats in the game. But it's not just raw power. It's their resistance profile, movepools, and versatility in competitive battles that make them legends.</p>
+          <button class="btn-primary ins-read-btn" data-modal="featured">Read More <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <div class="featured-visual">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png" alt="Dragonite" />
+        </div>
+      </div>
+      <!-- Guides -->
+      <div class="insight-section" data-category="guide">
+        <h2 class="section-title ins-section-title">Guides</h2>
+        <div class="insight-grid" id="guidesGrid">
+          <div class="insight-card guide" data-modal="guide1">
+            <div class="ins-card-icon">📘</div>
+            <h3>Evolution Mechanics Explained</h3>
+            <p>From level-ups to friendship, trade, and item evolutions. Understand every trigger in the game.</p>
+            <span class="ins-tag guide">Guide</span>
+          </div>
+          <div class="insight-card guide" data-modal="guide2">
+            <div class="ins-card-icon">⚡</div>
+            <h3>Abilities & Moves Basics</h3>
+            <p>Learn how abilities interact with moves and weather to create powerful synergies your opponent won't see coming.</p>
+            <span class="ins-tag guide">Guide</span>
+          </div>
+          <div class="insight-card guide" data-modal="guide3">
+            <div class="ins-card-icon">🗺️</div>
+            <h3>Type Matchups Made Simple</h3>
+            <p>A clean visual breakdown of all 18 types, their strengths, weaknesses, and immunities.</p>
+            <span class="ins-tag guide">Guide</span>
+          </div>
+        </div>
+      </div>
+      <!-- Top Lists -->
+      <div class="insight-section" data-category="toplist">
+        <h2 class="section-title ins-section-title">Top Lists</h2>
+        <div class="insight-scroll-row" id="toplistRow">
+          <div class="insight-card toplist" data-modal="top1">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png" alt="Lugia" />
+            <h3>Top 10 Strongest Pokémon</h3>
+            <p>Legendaries, Mega Evolutions, and raw powerhouses, ranked by total base stats.</p>
+            <span class="ins-tag toplist">Top List</span>
+          </div>
+          <div class="insight-card toplist" data-modal="top2">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="Charizard" />
+            <h3>Best Starters by Region</h3>
+            <p>Which starter wins each region? We rank all 27 starters by design, power, and nostalgia.</p>
+            <span class="ins-tag toplist">Top List</span>
+          </div>
+          <div class="insight-card toplist" data-modal="top3">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png" alt="Lapras" />
+            <h3>Most Underrated Pokémon</h3>
+            <p>Hidden gems that deserve your attention. These Pokémon are stronger than their reputation suggests.</p>
+            <span class="ins-tag toplist">Top List</span>
+          </div>
+          <div class="insight-card toplist" data-modal="top4">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png" alt="Gengar" />
+            <h3>Most Iconic Pokémon of All Time</h3>
+            <p>Cultural impact, design legacy, and competitive history. The Pokémon everyone knows.</p>
+            <span class="ins-tag toplist">Top List</span>
+          </div>
+        </div>
+      </div>
+      <!-- Strategy -->
+      <div class="insight-section" data-category="strategy">
+        <h2 class="section-title ins-section-title">Strategy</h2>
+        <div class="insight-grid strategy-grid" id="strategyGrid">
+          <div class="insight-card strategy" data-modal="strat1">
+            <div class="ins-card-icon">⚔️</div>
+            <h3>Beginner Battle Guide</h3>
+            <p>From your first fight to your first victory. The fundamentals of Pokémon battles explained clearly.</p>
+            <span class="ins-tag strategy">Strategy</span>
+          </div>
+          <div class="insight-card strategy" data-modal="strat2">
+            <div class="ins-card-icon">🛡️</div>
+            <h3>Build a Balanced Team</h3>
+            <p>Coverage, synergy, speed tiers. Learn how to construct a team that handles anything thrown at it.</p>
+            <span class="ins-tag strategy">Strategy</span>
+          </div>
+          <div class="insight-card strategy" data-modal="strat3">
+            <div class="ins-card-icon">🔥</div>
+            <h3>Best Type Combinations</h3>
+            <p>Some dual-type combos are just broken. Here are the combinations with the fewest weaknesses.</p>
+            <span class="ins-tag strategy">Strategy</span>
+          </div>
+        </div>
+      </div>
+      <footer class="page-footer">
+        <p>Data powered by <a href="https://pokeapi.co" target="_blank">PokéAPI</a> · Pokémon © Nintendo / Game Freak ·
+          <br>
+          <br>
+          This project was created as part of a <em>Final Project: The API Integration Bridge</em> to explore real-world web development, API integration, and UI/UX design principles.
+        </p>
+      </footer>
+    </section>
+    
+    <!-- ──────────────────── FAVORITES PAGE ──────────────────── -->
+    <section class="page" id="page-favorites">
+      <div class="fav-header">
+        <h1><i class=" "></i>Favorites</h1>
+        <p>Your personal Pokémon collection.</p>
+      </div>
+      <div class="fav-controls" id="favControls" style="display:none">
+        <input type="text" id="favSearch" class="dex-search" placeholder="Search favorites…" />
+        <select id="favSort" class="dex-select">
+          <option value="recent">Recently Added</option>
+          <option value="name">By Name</option>
+          <option value="type">By Type</option>
+        </select>
+        <button class="dex-clear-btn danger" id="clearAllFavBtn"><i class="fas fa-trash"></i> Clear All</button>
+      </div>
+      <div class="fav-empty" id="favEmpty">
+        <div class="fav-pokeball-anim">
+          <div class="pokeball small">
+            <div class="pokeball-top"></div>
+            <div class="pokeball-bottom"></div>
+            <div class="pokeball-center">
+              <div class="pokeball-button"></div>
+            </div>
+          </div>
+        </div>
+        <h2>No favorites yet!</h2>
+        <p>Click the ⭐ icon on any Pokémon to add it here.</p>
+        <button class="btn-primary" data-goto="pokedex">Go to Pokédex <i class="fas fa-arrow-right"></i></button>
+      </div>
+      <div class="dex-grid" id="favGrid"></div>
+      <footer class="page-footer">
+        <p>Data powered by <a href="https://pokeapi.co" target="_blank">PokéAPI</a> · Pokémon © Nintendo / Game Freak ·
+          <br>
+          <br>
+          This project was created as part of a <em>Final Project: The API Integration Bridge</em> to explore real-world web development, API integration, and UI/UX design principles.
+        </p>
+      </footer>
+    </section>
+    
+    <!-- ──────────────────── ABOUT PAGE ──────────────────── -->
+    <section class="page" id="page-about">
+      <div class="about-hero">
+        <h1>About</h1>
+        <p>A Pokémon web experience built for exploration, learning, and design.</p>
+      </div>
+      <!-- On This Page -->
+      <div class="about-toc">
+        <p class="toc-label">On This Page</p>
+        <nav class="toc-links">
+          <a href="#about-overview">Overview</a>
+          <a href="#about-features">Features</a>
+          <a href="#about-how">How It Works</a>
+          <a href="#about-insights">Insights Section</a>
+          <a href="#about-tech">Technologies Used</a>
+          <a href="#about-credits">Credits</a>
+          <a href="#about-dev">Developer</a>
+        </nav>
+      </div>
+      <!-- Sections -->
+      <div class="about-content">
+        <div class="about-section" id="about-overview">
+          <h2>Overview</h2>
+          <div class="about-divider"></div>
+          <p>Dexoria is a fully client-side Pokémon web experience designed to blend data-driven exploration with beautiful, futuristic UI design. Whether you're a long-time fan or new to the world of Pokémon, Dexoria gives you everything you need. From full Pokédex listings to competitive strategy guides.</p>
+          <p>The goal was simple: build a Pokémon site that actually feels worth exploring. Not just a data table, but a visual journey.</p>
+        </div>
+        <div class="about-section" id="about-features">
+          <h2>Features</h2>
+          <div class="about-divider"></div>
+          <div class="features-grid about-features">
+            <div class="about-feature-item"><i class="fas fa-infinity"></i><span>Animated infinite Pokémon gallery with glass-card rows</span></div>
+            <div class="about-feature-item"><i class="fas fa-search"></i><span>Full Pokédex with search, type, generation filters</span></div>
+            <div class="about-feature-item"><i class="fas fa-chart-bar"></i><span>Detailed Pokémon modals. tats, abilities, evolutions</span></div>
+            <div class="about-feature-item"><i class="fas fa-lightbulb"></i><span>Insights hub: guides, top lists, battle strategy</span></div>
+            <div class="about-feature-item"><i class="fas fa-star"></i><span>LocalStorage favorites system with sorting and search</span></div>
+            <div class="about-feature-item"><i class="fas fa-moon"></i><span>Dark/Light mode with accent color customization</span></div>
+            <div class="about-feature-item"><i class="fas fa-gear"></i><span>Full settings panel with persistent preferences</span></div>
+            <div class="about-feature-item"><i class="fas fa-mobile-alt"></i><span>Responsive design for desktop, tablet, and mobile</span></div>
+          </div>
+        </div>
+        <div class="about-section" id="about-how">
+          <h2>How It Works</h2>
+          <div class="about-divider"></div>
+          <p>Dexoria is entirely client-side. No backend, no database. Here's the simple flow:</p>
+          <ol class="about-list">
+            <li><strong>Data Fetching:</strong> Pokémon data is pulled live from the PokéAPI REST API using <code>fetch()</code>.</li>
+            <li><strong>Dynamic Rendering:</strong> JavaScript dynamically builds cards, grids, and modals from API responses.</li>
+            <li><strong>Local Storage:</strong> Favorites and settings are saved in the browser's <code>localStorage</code>, they persist across sessions.</li>
+            <li><strong>Pure Frontend:</strong> No frameworks. Just HTML, CSS, and JavaScript.</li>
+          </ol>
+        </div>
+        <div class="about-section" id="about-insights">
+          <h2>Insights Section</h2>
+          <div class="about-divider"></div>
+          <p>The Insights section goes beyond raw data. It provides guides for beginners, ranked top lists for fun exploration, and strategy content for those looking to understand competitive Pokémon. Each card is categorized and filterable so you can jump straight to what interests you.</p>
+        </div>
+        <div class="about-section" id="about-tech">
+          <h2>Technologies Used</h2>
+          <div class="about-divider"></div>
+          <div class="tech-grid">
+            <div class="tech-badge"><i class="fab fa-html5"></i> HTML5</div>
+            <div class="tech-badge"><i class="fab fa-css3-alt"></i> CSS3</div>
+            <div class="tech-badge"><i class="fab fa-js"></i> JavaScript (ES6+)</div>
+            <div class="tech-badge"><i class="fas fa-cloud"></i> PokéAPI</div>
+            <div class="tech-badge"><i class="fas fa-font"></i> Google Fonts</div>
+            <div class="tech-badge"><i class="fas fa-icons"></i> Font Awesome</div>
+          </div>
+        </div>
+        <div class="about-section" id="about-credits">
+          <h2>Credits</h2>
+          <div class="about-divider"></div>
+          <p>🔗 <strong>Pokémon Data:</strong> Provided by <a href="https://pokeapi.co" target="_blank">PokéAPI</a>, a free, open RESTful API for Pokémon data.</p>
+          <p>🎮 <strong>Pokémon IP:</strong> Pokémon and all related names are trademarks of Nintendo / Game Freak / Creatures Inc.</p>
+          <p>🖋️ <strong>Icons:</strong> Font Awesome (free tier).</p>
+          <p>🔤 <strong>Fonts:</strong> Orbitron & Exo 2 via Google Fonts.</p>
+        </div>
+        <div class="about-section" id="about-dev">
+          <h2>Developer</h2>
+          <div class="about-divider"></div>
+          <div class="dev-card">
+            <div class="dev-avatar">BSIT</div>
+            <div class="dev-info">
+              <h3>AADGM</h3>
+              <p class="dev-course">IPT101</p>
+              <p>Members: <br>
+                <b>A</b>quino, Athenah Mae A.<br>
+                <b>A</b>quino, Janelle Ashlyn O.<br>
+                <b>D</b>ela Cruz, Vanessa <br>
+                <b>G</b>ueco, Danica Rose M.<br>
+                <b>M</b>acabanti, Camille B.
+              </p>
+              <p>This project was created as part of a <em>Final Project: The API Integration Bridge</em> to explore real-world web development, API integration, and UI/UX design principles.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="back-to-top" id="backToTop"><i class="fas fa-chevron-up"></i></button>
+      <footer class="page-footer">
+        <p>Data powered by <a href="https://pokeapi.co" target="_blank">PokéAPI</a> · Pokémon © Nintendo / Game Freak </p>
+      </footer>
+    </section>
+    
+  </main>
+  
+  <!-- ═══════════════════════════════════════ MODALS ═══════════════════════════════════════ -->
+  
+  <!-- Pokémon Detail Modal -->
+  <div class="modal-overlay" id="pokemonModal">
+    <div class="modal-box pokemon-modal-box">
+      <button class="modal-close" id="closePokemonModal"><i class="fas fa-times"></i></button>
+      <div id="pokemonModalContent">
+        <div class="modal-loader">
+          <div class="loader-ring"></div>
+          <p>Loading…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-box settings-box">
+      <div class="settings-header">
+        <h2><i class="fas fa-gear"></i> Settings</h2>
+        <button class="modal-close" id="closeSettings"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="settings-body">
+        <!-- Theme -->
+        <div class="setting-group">
+          <h3 class="setting-group-title">Theme Mode</h3>
+          <div class="setting-pills">
+            <button class="pill-btn" data-setting="theme" data-value="dark">Dark Mode</button>
+            <button class="pill-btn" data-setting="theme" data-value="light">Light Mode</button>
+          </div>
+        </div>
+        <!-- Accent Color -->
+        <div class="setting-group">
+          <h3 class="setting-group-title">Accent Color</h3>
+          <div class="setting-pills">
+            <button class="pill-btn color-pill" data-setting="accent" data-value="cyan" style="--pill-color:#27F5FF">Cyan</button>
+            <button class="pill-btn color-pill" data-setting="accent" data-value="violet" style="--pill-color:#7C4DFF">Violet</button>
+            <button class="pill-btn color-pill" data-setting="accent" data-value="red" style="--pill-color:#FF4B6E">Red</button>
+            <button class="pill-btn color-pill" data-setting="accent" data-value="green" style="--pill-color:#2DFF9B">Green</button>
+            <button class="pill-btn color-pill" data-setting="accent" data-value="gold" style="--pill-color:#FFD700">Gold</button>
+          </div>
+        </div>
+        <!-- Animations -->
+        <div class="setting-group">
+          <h3 class="setting-group-title">Background Effects</h3>
+          <div class="setting-toggle-row">
+            <span>Enable Animations</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleAnimations" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <!-- Pokédex View -->
+        <div class="setting-group">
+          <h3 class="setting-group-title">Default Pokédex View</h3>
+          <div class="setting-pills">
+            <button class="pill-btn" data-setting="dexView" data-value="grid">Grid View</button>
+            <button class="pill-btn" data-setting="dexView" data-value="list">List View</button>
+          </div>
+        </div>
+        <!-- Sort Preference -->
+        <div class="setting-group">
+          <h3 class="setting-group-title">Default Sort</h3>
+          <div class="setting-pills">
+            <button class="pill-btn" data-setting="defaultSort" data-value="number">By Number</button>
+            <button class="pill-btn" data-setting="defaultSort" data-value="name">By Name</button>
+          </div>
+        </div>
+        <!-- Show Info -->
+        <div class="setting-group">
+          <h3 class="setting-group-title">Show Pokémon Info</h3>
+          <div class="setting-toggle-row">
+            <span>Show stats on hover</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleHoverStats" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="setting-toggle-row">
+            <span>Show type badges</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleTypeBadges" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="setting-toggle-row">
+            <span>Show Pokémon number</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleShowNumber" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <!-- Search Behavior -->
+        <div class="setting-group">
+          <h3 class="setting-group-title">Search Behavior</h3>
+          <div class="setting-pills">
+            <button class="pill-btn" data-setting="searchMode" data-value="instant">Instant Search</button>
+            <button class="pill-btn" data-setting="searchMode" data-value="enter">Enter to Search</button>
+          </div>
+        </div>
+        <!-- Favorites -->
+        <div class="setting-group">
+          <h3 class="setting-group-title">Favorites</h3>
+          <button class="dex-clear-btn danger full-width" id="settingsClearFavs"><i class="fas fa-trash"></i> Clear All Favorites</button>
+        </div>
+        <!-- About -->
+        <div class="setting-group about-group">
+          <h3 class="setting-group-title">About</h3>
+          <p>Dexoria v1.0.0</p>
+          <p>Data: <a href="https://pokeapi.co" target="_blank">PokéAPI</a></p>
+          <p>Pokémon © Nintendo / Game Freak ·
+            <br>
+            <br>
+            This project was created as part of a <em>Final Project: The API Integration Bridge</em> to explore real-world web development, API integration, and UI/UX design principles.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Insight Article Modal -->
+  <div class="modal-overlay" id="insightModal">
+    <div class="modal-box insight-modal-box">
+      <button class="modal-close" id="closeInsightModal"><i class="fas fa-times"></i></button>
+      <div id="insightModalContent"></div>
+    </div>
+  </div>
+  
+  <!-- Clear All Favorites Confirmation -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal-box confirm-box">
+      <h3>Clear All Favorites?</h3>
+      <p>This will remove all saved Pokémon from your favorites. This action cannot be undone.</p>
+      <div class="confirm-btns">
+        <button class="btn-secondary" id="confirmCancel">Cancel</button>
+        <button class="btn-primary danger" id="confirmClear">Yes, Clear All</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="main.js"></script>
+</body>
+
+</html>
